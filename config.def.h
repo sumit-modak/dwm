@@ -66,6 +66,7 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", nor_bg_col, "-nf", nor_fg_col, "-sb", sel_bg_col, "-sf", sel_fg_col, "-c", NULL };
 static const char *termcmd[]  = { "alacritty", NULL };
 
+#include "movestack.c"
 static const Key keys[] = {
 	/* modifier                     key        				function        argument */
 	{ MODKEY,                       XK_l,      				spawn,          {.v = dmenucmd } },
@@ -73,11 +74,13 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_b,      				togglebar,      {0} },
 	{ MODKEY,                       XK_a,      				focusstack,     {.i = +1 } },						// shifts focus in clockwise manner
 	{ MODKEY,                       XK_s,      				focusstack,     {.i = -1 } },						// shifts focus in anticlockwise manner
-	{ MODKEY,                       XK_bracketleft,   incnmaster,     {.i = +1 } },						// brings one window on left side
-	{ MODKEY,                       XK_bracketright,  incnmaster,     {.i = -1 } },						// brings one window on right side
+	{ MODKEY,                       XK_bracketleft,   		incnmaster,     {.i = +1 } },						// brings one window on left side
+	{ MODKEY,                       XK_bracketright,  		incnmaster,     {.i = -1 } },						// brings one window on right side
 	{ MODKEY,                       XK_k,      				setmfact,       {.f = -0.05} }, 				// resize window - makes left windows smaller
 	{ MODKEY,                       XK_v,      				setmfact,       {.f = +0.05} },					// resize window - makes right windows smaller
-	{ MODKEY,             					XK_Tab,    				zoom,           {0} },                  // brings window to the master 
+	{ MODKEY|ShiftMask,             XK_j,      				movestack,      {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_m,      				movestack,      {.i = -1 } },
+	{ MODKEY,             			XK_Tab,    				zoom,           {0} },                  // brings window to the master 
 	{ MODKEY|ShiftMask,             XK_Tab,    				view,           {0} },									// moves to last used tag
 	{ MODKEY,                       XK_q,      				killclient,     {0} },									// kill focused window
 	{ MODKEY,                       XK_t,      				setlayout,      {.v = &layouts[0]} },   // sets tiling layout mode
