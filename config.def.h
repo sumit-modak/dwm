@@ -2,6 +2,7 @@
 
 /* appearance */
 static const unsigned int borderpx  = 2;        /* border pixel of windows */
+static const unsigned int gappx     = 4;        /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
@@ -78,14 +79,17 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_bracketright,  		incnmaster,     {.i = -1 } },						// brings one window on right side
 	{ MODKEY,                       XK_k,      				setmfact,       {.f = -0.05} }, 				// resize window - makes left windows smaller
 	{ MODKEY,                       XK_v,      				setmfact,       {.f = +0.05} },					// resize window - makes right windows smaller
-	{ MODKEY|ShiftMask,             XK_j,      				movestack,      {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_m,      				movestack,      {.i = -1 } },
+	{ MODKEY,                       XK_w,      				movestack,      {.i = +1 } },
+	{ MODKEY,                       XK_r,      				movestack,      {.i = -1 } },
 	{ MODKEY,             			XK_Tab,    				zoom,           {0} },                  // brings window to the master 
 	{ MODKEY|ShiftMask,             XK_Tab,    				view,           {0} },									// moves to last used tag
 	{ MODKEY,                       XK_q,      				killclient,     {0} },									// kill focused window
 	{ MODKEY,                       XK_t,      				setlayout,      {.v = &layouts[0]} },   // sets tiling layout mode
 	{ MODKEY,                       XK_f,      				setlayout,      {.v = &layouts[1]} },   // sets floating layout mode
 	{ MODKEY,                       XK_m,      				setlayout,      {.v = &layouts[2]} },   // sets monocle layout mode
+	{ MODKEY,                       XK_minus,  				setgaps,        {.i = -1 } },
+	{ MODKEY,                       XK_equal,  				setgaps,        {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_equal,  				setgaps,        {.i = 0  } },
 	{ MODKEY,                       XK_space,  				setlayout,      {0} },									// toggle floating mode for current tag
 	{ MODKEY|ShiftMask,             XK_space,  				togglefloating, {0} },									// toggle floating mode for activated window
 	{ MODKEY,                       XK_0,      				view,           {.ui = ~0 } },
@@ -98,12 +102,12 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_2,                      				1)
 	TAGKEYS(                        XK_3,  				                    2)
 	TAGKEYS(                        XK_4,          				            3)
-	TAGKEYS(                        XK_5,           				          4)
-	TAGKEYS(                        XK_6,                             5)
-	TAGKEYS(                        XK_7,                             6)
-	TAGKEYS(                        XK_8,                             7)
-	TAGKEYS(                        XK_9,                             8)
-	{ MODKEY|ShiftMask,             XK_q,             quit,           {0} },
+	TAGKEYS(                        XK_5,           				        4)
+	TAGKEYS(                        XK_6,                             		5)
+	TAGKEYS(                        XK_7,                             		6)
+	TAGKEYS(                        XK_8,                             		7)
+	TAGKEYS(                        XK_9,                             		8)
+	{ MODKEY|ShiftMask,             XK_q,             	    quit,           {0} },
 };
 
 /* button definitions */
