@@ -6,10 +6,10 @@ static const unsigned int gappx     = 4;        /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "jetbrains-mono-fonts:size=16" };
-static const char dmenufont[]       = "jetbrains-mono-fonts:size=16";
-static const char nor_bg_col[]      = "#222222";
-static const char nor_border_col[]  = "#444444";
+static const char *fonts[]          = { "HackNerdFont-Regular:size=16:pixelsize=16:antialias=true:autohint=true" };
+static const char dmenufont[]       = "HackNerdFont-Regular:size=12";
+static const char nor_bg_col[]      = "#202020";
+static const char nor_border_col[]  = "#404040";
 static const char nor_fg_col[]      = "#bbbbbb";
 static const char sel_bg_col[]      = "#005577";
 static const char sel_border_col[]  = "#ddddff";
@@ -39,14 +39,14 @@ static const Rule rules[] = {
 };
 
 /* layout(s) */
-static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
+static const float mfact     = 0.50; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
 static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[==]",     tile },    /* first entry is default */
+	{ "[]=",     tile },    /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
 };
@@ -64,24 +64,24 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", nor_bg_col, "-nf", nor_fg_col, "-sb", sel_bg_col, "-sf", sel_fg_col, "-c", NULL };
-static const char *termcmd[]  = { "alacritty", NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", nor_bg_col, "-nf", nor_fg_col, "-sb", sel_bg_col, "-sf", sel_fg_col, NULL };
+static const char *termcmd[]  = { "kitty", NULL };
 
 #include "movestack.c"
 static const Key keys[] = {
 	/* modifier                     key        				function        argument */
-	{ MODKEY,                       XK_l,      				spawn,          {.v = dmenucmd } },
+	{ MODKEY,                       XK_o,      				spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return, 				spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_b,      				togglebar,      {0} },
 	{ MODKEY,                       XK_a,      				focusstack,     {.i = +1 } },						// shifts focus in clockwise manner
 	{ MODKEY,                       XK_s,      				focusstack,     {.i = -1 } },						// shifts focus in anticlockwise manner
-	{ MODKEY,                       XK_bracketleft,   		incnmaster,     {.i = +1 } },						// brings one window on left side
-	{ MODKEY,                       XK_bracketright,  		incnmaster,     {.i = -1 } },						// brings one window on right side
+	{ MODKEY,                       XK_bracketleft,   incnmaster,     {.i = +1 } },						// brings one window on left side
+	{ MODKEY,                       XK_bracketright,	incnmaster,     {.i = -1 } },						// brings one window on right side
 	{ MODKEY,                       XK_k,      				setmfact,       {.f = -0.05} }, 				// resize window - makes left windows smaller
 	{ MODKEY,                       XK_v,      				setmfact,       {.f = +0.05} },					// resize window - makes right windows smaller
 	{ MODKEY,                       XK_w,      				movestack,      {.i = +1 } },
 	{ MODKEY,                       XK_r,      				movestack,      {.i = -1 } },
-	{ MODKEY,             			XK_Tab,    				zoom,           {0} },                  // brings window to the master 
+	{ MODKEY,                  			XK_Tab,    				zoom,           {0} },                  // brings window to the master 
 	{ MODKEY|ShiftMask,             XK_Tab,    				view,           {0} },									// moves to last used tag
 	{ MODKEY,                       XK_q,      				killclient,     {0} },									// kill focused window
 	{ MODKEY,                       XK_t,      				setlayout,      {.v = &layouts[0]} },   // sets tiling layout mode
@@ -102,12 +102,13 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_2,                      				1)
 	TAGKEYS(                        XK_3,  				                    2)
 	TAGKEYS(                        XK_4,          				            3)
-	TAGKEYS(                        XK_5,           				        4)
-	TAGKEYS(                        XK_6,                             		5)
-	TAGKEYS(                        XK_7,                             		6)
-	TAGKEYS(                        XK_8,                             		7)
-	TAGKEYS(                        XK_9,                             		8)
-	{ MODKEY|ShiftMask,             XK_q,             	    quit,           {0} },
+	TAGKEYS(                        XK_5,           				          4)
+	TAGKEYS(                        XK_6,                             5)
+	TAGKEYS(                        XK_7,                             6)
+	TAGKEYS(                        XK_8,                             7)
+	TAGKEYS(                        XK_9,                             8)
+	{ MODKEY|ShiftMask,             XK_q,             quit,           {0} },
+	{ MODKEY|ShiftMask,             XK_n,             spawn,          SHCMD("~/.local/bin/setbg")}
 };
 
 /* button definitions */
