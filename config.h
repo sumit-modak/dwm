@@ -6,7 +6,7 @@ static const unsigned int gappx     = 4;        /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "HackNerdFont-Regular:size=16:pixelsize=16:antialias=true:autohint=true" };
+static const char *fonts[]          = { "HackNerdFont:size=16:pixelsize=16:antialias=true:autohint=true" };
 static const char dmenufont[]       = "HackNerdFont-Regular:size=12";
 static const char nor_bg_col[]      = "#202020";
 static const char nor_border_col[]  = "#404040";
@@ -117,6 +117,7 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_comma,         spawn,          SHCMD("maim | xclip -selection clipboard -t image/png")}, // gets screenshots of full window and stores in clipboard
   { MODKEY,                       XK_period,        spawn,          SHCMD("maim --select ~/multimedia/screenshots/\"Screenshot_$(date +%Y-%m-%d_%T).png\"")}, // enable user to select screenshot
 	{ MODKEY|ShiftMask,             XK_period,        spawn,          SHCMD("maim --select | xclip -selection clipboard -t image/png")}, // enables user to select screenshot and stores in clipboard
+	{ MODKEY,						 						XK_l,             spawn, 					SHCMD("slock -m \"Locked at  $(date \"+%a %d, %H:%M:%S\")\"")}
 };
 
 /* button definitions */
