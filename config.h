@@ -18,6 +18,7 @@ static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { nor_fg_col, nor_bg_col, nor_border_col },
 	[SchemeSel]  = { sel_fg_col, sel_bg_col, sel_border_col },
+	[SchemeInfo] = { sel_fg_col, "#264f78", "#000000" }, 	// infobar middle {text, background, not used but cannot be empty}
 };
 
 /* tagging */
@@ -131,4 +132,3 @@ static const Button buttons[] = {
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
 };
-
