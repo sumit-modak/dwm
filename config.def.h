@@ -65,17 +65,17 @@ static const char *termcmd[]  = { "kitty", NULL };
 #include "movestack.c"
 static const Key keys[] = {
 	/* modifier                     key        				function        argument */
-	{ MODKEY,                       XK_o,      				spawn,          {.v = dmenucmd } },
-	{ MODKEY,                       XK_Return, 				spawn,          {.v = termcmd } },
+	{ MODKEY,                       XK_o,      				spawn,          {.v = dmenucmd } },			// spawns dmenu
+	{ MODKEY,                       XK_Return, 				spawn,          {.v = termcmd } },			// spawns terminal (kitty)
 	{ MODKEY,                       XK_b,      				togglebar,      {0} },									// toggles the dwm bar
-	{ MODKEY,                       XK_a,      				focusstack,     {.i = +1 } },						// shifts focus in clockwise manner
-	{ MODKEY,                       XK_s,      				focusstack,     {.i = -1 } },						// shifts focus in anticlockwise manner
+	{ MODKEY,                       XK_d,      				focusstack,     {.i = +1 } },						// shifts focus to next window below stack
+	{ MODKEY,                       XK_h,      				focusstack,     {.i = -1 } },						// shifts focus to next window above stack
+	{ MODKEY|ShiftMask,             XK_d,      				movestack,      {.i = +1 } }, 					// move window downwards the stack
+	{ MODKEY|ShiftMask,             XK_h,      				movestack,      {.i = -1 } },						// move window upwards the stack
 	{ MODKEY,                       XK_bracketleft,   incnmaster,     {.i = +1 } },						// brings adjacent slave window on master stack
 	{ MODKEY,                       XK_bracketright,	incnmaster,     {.i = -1 } },						// brings adjacent master window on slave stack
 	{ MODKEY,                       XK_k,      				setmfact,       {.f = -0.05} }, 				// resize window - makes master windows smaller
 	{ MODKEY,                       XK_v,      				setmfact,       {.f = +0.05} },					// resize window - makes slave windows smaller
-	{ MODKEY,                       XK_r,      				movestack,      {.i = +1 } }, 					// move window downwards the stack
-	{ MODKEY,                       XK_w,      				movestack,      {.i = -1 } },						// move window upwards the stack
 	{ MODKEY,                  			XK_Tab,    				zoom,           {0} },                  // brings window to the master 
 	{ MODKEY|ShiftMask,             XK_Tab,    				view,           {0} },									// moves to last used tag
 	{ MODKEY,                       XK_q,      				killclient,     {0} },									// kill focused window
