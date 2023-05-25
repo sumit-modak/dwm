@@ -5,3 +5,4 @@ config.def.h.rej
 dwm
 dwm.o
 drw.o
+util.o
