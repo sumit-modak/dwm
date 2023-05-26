@@ -42,7 +42,8 @@ static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen win
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[]=",     tile },    /* first entry is default */
+	{ "[]=",     	tile },    /* first entry is default */
+	{ "TTT",      bstack },  /* stack is on the bottom of the monitor */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
 };
@@ -79,9 +80,10 @@ static const Key keys[] = {
 	{ MODKEY,                  			XK_Tab,    				zoom,           {0} },                  // brings window to the master 
 	{ MODKEY|ShiftMask,             XK_Tab,    				view,           {0} },									// moves to last used tag
 	{ MODKEY,                       XK_q,      				killclient,     {0} },									// kill focused window
-	{ MODKEY,                       XK_t,      				setlayout,      {.v = &layouts[0]} },   // sets tiling layout mode
-	{ MODKEY,                       XK_f,      				setlayout,      {.v = &layouts[1]} },   // sets floating layout mode
-	{ MODKEY,                       XK_m,      				setlayout,      {.v = &layouts[2]} },   // sets monocle layout mode
+	{ MODKEY,                       XK_t,      				setlayout,      {.v = &layouts[0]} },   // sets vertical tiling layout mode
+	{ MODKEY,                       XK_s,      				setlayout,      {.v = &layouts[1]} },   // sets horizontal tiling layout mode
+	{ MODKEY,                       XK_f,      				setlayout,      {.v = &layouts[2]} },   // sets floating layout mode
+	{ MODKEY,                       XK_m,      				setlayout,      {.v = &layouts[3]} },   // sets monocle layout mode
 	{ MODKEY,                       XK_space,  				setlayout,      {0} },									// toggle between last activated mode and current mode for current tag
 	{ MODKEY|ShiftMask,             XK_space,  				togglefloating, {0} },									// toggle between last activated mode and current mode for activated window
 	TAGKEYS(                        XK_1,             				        0)
