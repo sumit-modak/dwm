@@ -42,7 +42,7 @@ static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen win
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[]=",     tile },    /* first entry is default */
+	{ "[]=",     	tile },    /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
 };
@@ -63,7 +63,6 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", nor_bg_col, "-nf", nor_fg_col, "-sb", sel_bg_col, "-sf", sel_fg_col, NULL };
 static const char *termcmd[]  = { "kitty", NULL };
 
-#include "movestack.c"
 static const Key keys[] = {
 	/* modifier                     key        				function        argument */
 	{ MODKEY,                       XK_o,      				spawn,          {.v = dmenucmd } },			// spawns dmenu
