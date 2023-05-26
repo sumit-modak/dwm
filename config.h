@@ -47,6 +47,7 @@ static const Layout layouts[] = {
 	{ "H*H",      centeredmaster }, /* master is present on the middle of the screen */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
+	{ "###", 			grid }
 };
 
 /* key definitions */
@@ -86,6 +87,7 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_c,      				setlayout,      {.v = &layouts[2]} },		// sets centered master tiling mode
 	{ MODKEY,                       XK_f,      				setlayout,      {.v = &layouts[3]} },   // sets floating layout mode
 	{ MODKEY,                       XK_m,      				setlayout,      {.v = &layouts[4]} },   // sets monocle layout mode
+	{ MODKEY,												XK_g,							setlayout, 			{.v = &layouts[5]} },		// sets grid layout mode
 	{ MODKEY,                       XK_space,  				setlayout,      {0} },									// toggle between last activated mode and current mode for current tag
 	{ MODKEY|ShiftMask,             XK_space,  				togglefloating, {0} },									// toggle between last activated mode and current mode for activated window
 	TAGKEYS(                        XK_1,             				        0)
