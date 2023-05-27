@@ -45,9 +45,9 @@ static const Layout layouts[] = {
 	{ "[]=",     	tile },    /* first entry is default */
 	{ "TTT",      htile },   /* master is present on the upper portion of the screen */ /* bottom stack */
 	{ "H*H",      cmaster }, /* master is present on the middle of the screen */ /* centered master */
-	{ "><>",      NULL },    /* no layout function means floating behavior */
+	{ "###", 			grid },		 /* gapless grid layout */
 	{ "[M]",      monocle },
-	{ "###", 			grid }		 /* gapless grid layout */
+	{ "><>",      NULL },    /* no layout function means floating behavior */
 };
 
 /* key definitions */
@@ -65,11 +65,14 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", nor_bg_col, "-nf", nor_fg_col, "-sb", sel_bg_col, "-sf", sel_fg_col, NULL };
 static const char *termcmd[]  = { "kitty", NULL };
+static const char *up_vol[]   = { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "+5%",   NULL };
+static const char *down_vol[] = { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "-5%",   NULL };
+static const char *mute_vol[] = { "pactl", "set-sink-mute",   "@DEFAULT_SINK@", "toggle", NULL };
 
 static const Key keys[] = {
-	/* modifier                     key        				function        argument */
-	{ MODKEY,                       XK_o,      				spawn,          {.v = dmenucmd } },			// spawns dmenu
-	{ MODKEY,                       XK_Return, 				spawn,          {.v = termcmd } },			// spawns terminal (kitty)
+	/* modifier                     key        				function        argument */	
+	{ MODKEY,                       XK_q,      				killclient,     {0} },									// kill focused window
+	{ MODKEY|ShiftMask,             XK_q,             quit,           {0} },									// quits dwm
 	{ MODKEY,                       XK_b,      				togglebar,      {0} },									// toggles the dwm bar
 	{ MODKEY,                       XK_d,      				focusstack,     {.i = +1 } },						// shifts focus to next window below stack
 	{ MODKEY,                       XK_h,      				focusstack,     {.i = -1 } },						// shifts focus to next window above stack
@@ -81,15 +84,17 @@ static const Key keys[] = {
 	{ MODKEY,                       XK_v,      				setmfact,       {.f = +0.05} },					// resize window - makes slave windows smaller
 	{ MODKEY,                  			XK_Tab,    				zoom,           {0} },                  // brings window to the master 
 	{ MODKEY|ShiftMask,             XK_Tab,    				view,           {0} },									// moves to last used tag
-	{ MODKEY,                       XK_q,      				killclient,     {0} },									// kill focused window
 	{ MODKEY,                       XK_t,      				setlayout,      {.v = &layouts[0]} },   // sets vertical tiling layout mode
-	{ MODKEY,                       XK_s,      				setlayout,      {.v = &layouts[1]} },   // sets horizontal tiling layout mode
+	{ MODKEY|ShiftMask,             XK_t,      				setlayout,      {.v = &layouts[1]} },   // sets horizontal tiling layout mode
 	{ MODKEY,                       XK_c,      				setlayout,      {.v = &layouts[2]} },		// sets centered master tiling mode
-	{ MODKEY,                       XK_f,      				setlayout,      {.v = &layouts[3]} },   // sets floating layout mode
+	{ MODKEY,												XK_g,							setlayout, 			{.v = &layouts[3]} },		// sets grid layout mode
 	{ MODKEY,                       XK_m,      				setlayout,      {.v = &layouts[4]} },   // sets monocle layout mode
-	{ MODKEY,												XK_g,							setlayout, 			{.v = &layouts[5]} },		// sets grid layout mode
-	{ MODKEY,                       XK_space,  				setlayout,      {0} },									// toggle between last activated mode and current mode for current tag
+	{ MODKEY,                       XK_space,  				setlayout,      {.v = &layouts[5]} },   // sets floating layout mode
 	{ MODKEY|ShiftMask,             XK_space,  				togglefloating, {0} },									// toggle between last activated mode and current mode for activated window
+  { MODKEY,                       XK_minus,  				setgaps,        {.i = -1 } },						// decreases window gaps
+	{ MODKEY,                       XK_equal,  				setgaps,        {.i = +1 } },						// increases window gaps
+	{ MODKEY|ShiftMask,             XK_equal,  				setgaps,        {.i = 0  } },						// sets default window gaps
+
 	TAGKEYS(                        XK_1,             				        0)
 	TAGKEYS(                        XK_2,                      				1)
 	TAGKEYS(                        XK_3,  				                    2)
@@ -99,10 +104,6 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_7,                             6)
 	TAGKEYS(                        XK_8,                             7)
 	TAGKEYS(                        XK_9,                             8)
-	{ MODKEY|ShiftMask,             XK_q,             quit,           {0} },									// quits dwm
-  { MODKEY,                       XK_minus,  				setgaps,        {.i = -1 } },						// decreases window gaps
-	{ MODKEY,                       XK_equal,  				setgaps,        {.i = +1 } },						// increases window gaps
-	{ MODKEY|ShiftMask,             XK_equal,  				setgaps,        {.i = 0  } },						// increases window gaps
 
 	// unused shortcuts
 	{ MODKEY,                       XK_0,      				view,           {.ui = ~0 } },
@@ -113,6 +114,11 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_colon, 				tagmon,         {.i = +1 } },
 	
 	// extra added keyboard shortcuts
+	{ MODKEY,                       XK_o,      				spawn,          {.v = dmenucmd } },			// spawns dmenu
+	{ MODKEY,                       XK_Return, 				spawn,          {.v = termcmd } },			// spawns terminal (kitty)
+  { MODKEY, 											XK_u, 						spawn, 					{.v = up_vol } },
+  { MODKEY, 											XK_y, 						spawn, 					{.v = down_vol } },
+	{ MODKEY|ShiftMask,							XK_m,        			spawn, 					{.v = mute_vol } },
 	{ MODKEY|ShiftMask,             XK_b,             spawn,          SHCMD("~/.local/bin/setbg")}, // sets or changes background
 	{ MODKEY,                       XK_comma,         spawn,          SHCMD("maim ~/multimedia/screenshots/\"Screenshot_$(date +%Y-%m-%d_%T).png\"")}, // gets screenhot of full window
 	{ MODKEY|ShiftMask,             XK_comma,         spawn,          SHCMD("maim | xclip -selection clipboard -t image/png")}, // gets screenshots of full window and stores in clipboard

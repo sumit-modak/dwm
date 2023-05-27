@@ -9,7 +9,7 @@ dwm is an extremely fast, small, and dynamic window manager for X
 - [`HideVacantTags`](https://dwm.suckless.org/patches/hide_vacant_tags/) : By default, dwm shows all the tags even if they are unused. So, to change that this patch is added.
 - [`MoveStack`](https://dwm.suckless.org/patches/movestack/) : Dwm doesnt provides you the functionality to move a window (up or down) the stack. This patch fixes that issue by enabling the user to move windows freely.
 - [`GaplessGrid`](https://dwm.suckless.org/patches/gaplessgrid/) : I added this layout instead of grid mode layout because it doesnt leaves extra gaps while spawning the window.
-- [`PreserveOnRestart`](https://dwm.suckless.org/patches/preserveonrestart/) : This patch keeps the windows on their present tag after restarting dwm. By default, it moves all the windows on the first tag.
+- [`PreserveOnRestart`](https://dwm.suckless.org/patches/preserveonrestart/) : This patch keeps the windows on their present tag after restarting dwm. By default, it moves all the windows to the first tag.
 
 ## Partially Patched
 - [`BottomStack`](https://dwm.suckless.org/patches/bottomstack/) : There are two layouts in bottomstack patch (bstack & bstackhoriz) only the bstack layout is added.
@@ -38,6 +38,12 @@ sudo make clean install
 Add the following line to your `.xinitrc` to start dwm using startx
 ```
 exec dwm
+```
+For restarting dwm add these lines instead of the upper one
+```
+while true; do
+  dwm 2> ~/.cache/.dwm.log
+done
 ```
 ### Multimonitor setup
 In order to connect dwm to a specific display, make sure that the DISPLAY environment variable is set correctly, e.g.
