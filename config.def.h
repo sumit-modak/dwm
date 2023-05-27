@@ -12,7 +12,7 @@ static const char nor_bg_col[]      = "#202020";
 static const char nor_border_col[]  = "#404040";
 static const char nor_fg_col[]      = "#bbbbbb";
 static const char sel_bg_col[]      = "#005577";
-static const char sel_border_col[]  = "#ddddff";
+static const char sel_border_col[]  = "#dddddd";
 static const char sel_fg_col[]      = "#eeeeee";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
@@ -43,11 +43,11 @@ static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen win
 static const Layout layouts[] = {
 	/* symbol     arrange function */
 	{ "[]=",     	tile },    /* first entry is default */
-	{ "TTT",      bstack },  /* stack is on the bottom of the screen */
-	{ "H*H",      centeredmaster }, /* master is present on the middle of the screen */
+	{ "TTT",      htile },   /* master is present on the upper portion of the screen */ /* bottom stack */
+	{ "H*H",      cmaster }, /* master is present on the middle of the screen */ /* centered master */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
-	{ "###", 			grid }
+	{ "###", 			grid }		 /* gapless grid layout */
 };
 
 /* key definitions */
