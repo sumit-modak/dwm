@@ -47,7 +47,7 @@ static const Layout layouts[] = {
 	{ "H*H",      cmaster }, /* master is present on the middle of the screen */ /* centered master */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
-	{ "###", 			grid }
+	{ "###", 			grid }		 /* gapless grid layout */
 };
 
 /* key definitions */

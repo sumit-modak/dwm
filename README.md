@@ -9,6 +9,7 @@ dwm is an extremely fast, small, and dynamic window manager for X
 - [`HideVacantTags`](https://dwm.suckless.org/patches/hide_vacant_tags/) : By default, dwm shows all the tags even if they are unused. So, to change that this patch is added.
 - [`MoveStack`](https://dwm.suckless.org/patches/movestack/) : Dwm doesnt provides you the functionality to move a window (up or down) the stack. This patch fixes that issue by enabling the user to move windows freely.
 - [`GaplessGrid`](https://dwm.suckless.org/patches/gaplessgrid/) : I added this layout instead of grid mode layout because it doesnt leaves extra gaps while spawning the window.
+- [`PreserveOnRestart`](https://dwm.suckless.org/patches/preserveonrestart/) : This patch keeps the windows on their present tag after restarting dwm. By default, it moves all the windows on the first tag.
 
 ## Partially Patched
 - [`BottomStack`](https://dwm.suckless.org/patches/bottomstack/) : There are two layouts in bottomstack patch (bstack & bstackhoriz) only the bstack layout is added.
@@ -27,13 +28,9 @@ If you are trying to test these layouts you will find that few layouts are mostl
 In order to build dwm you need the Xlib (`libX11`, `libXft`, `libXinerama` mainly because most of the time during server installation these are not downloaded) header files.
 
 # Installation
-Clone this repository by 
 ```
-git clone https://github.com/sumit-modak/dwm.git
-```
-Change directory by running `cd dwm` on command line
-Afterwards enter the following command to build and install dwm
-```
+git clone https://github.com/sumit-modak/dwm.git &&
+cd dwm &&
 sudo make clean install
 ```
 
