@@ -6,7 +6,7 @@ static const unsigned int gappx     = 4;        /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "HackNerdFont:size=16:pixelsize=16:antialias=true:autohint=true" };
+static const char *fonts[]          = { "HackNerdFont:size=16:pixelsize=16:antialias=true:autohint=true", "fontawesome-fonts:size=16:pixelsize=16:antialias=true:autohint=true" };
 static const char dmenufont[]       = "HackNerdFont-Regular:size=12";
 static const char nor_bg_col[]      = "#202020";
 static const char nor_border_col[]  = "#404040";
@@ -90,7 +90,7 @@ static const Key keys[] = {
 	{ MODKEY,												XK_g,							setlayout, 			{.v = &layouts[3]} },		// sets grid layout mode
 	{ MODKEY,                       XK_m,      				setlayout,      {.v = &layouts[4]} },   // sets monocle layout mode
 	{ MODKEY,                       XK_space,  				setlayout,      {.v = &layouts[5]} },   // sets floating layout mode
-	{ MODKEY|ShiftMask,             XK_space,  				togglefloating, {0} },									// toggle between last activated mode and current mode for activated window
+	{ MODKEY|ShiftMask,             XK_space,  				togglefloating, {0} },									// toggle between activated layout mode and floating mode for selected window
   { MODKEY,                       XK_minus,  				setgaps,        {.i = -1 } },						// decreases window gaps
 	{ MODKEY,                       XK_equal,  				setgaps,        {.i = +1 } },						// increases window gaps
 	{ MODKEY|ShiftMask,             XK_equal,  				setgaps,        {.i = 0  } },						// sets default window gaps
@@ -116,9 +116,9 @@ static const Key keys[] = {
 	// extra added keyboard shortcuts
 	{ MODKEY,                       XK_o,      				spawn,          {.v = dmenucmd } },			// spawns dmenu
 	{ MODKEY,                       XK_Return, 				spawn,          {.v = termcmd } },			// spawns terminal (kitty)
-  { MODKEY, 											XK_u, 						spawn, 					{.v = up_vol } },
-  { MODKEY, 											XK_y, 						spawn, 					{.v = down_vol } },
-	{ MODKEY|ShiftMask,							XK_m,        			spawn, 					{.v = mute_vol } },
+  { MODKEY, 											XK_u, 						spawn, 					{.v = up_vol } },				// increases volume
+  { MODKEY, 											XK_y, 						spawn, 					{.v = down_vol } },			// decreases volume
+	{ MODKEY|ShiftMask,							XK_m,        			spawn, 					{.v = mute_vol } },			// toggles mute and last set volume
 	{ MODKEY|ShiftMask,             XK_b,             spawn,          SHCMD("~/.local/bin/setbg")}, // sets or changes background
 	{ MODKEY,                       XK_comma,         spawn,          SHCMD("maim ~/multimedia/screenshots/\"Screenshot_$(date +%Y-%m-%d_%T).png\"")}, // gets screenhot of full window
 	{ MODKEY|ShiftMask,             XK_comma,         spawn,          SHCMD("maim | xclip -selection clipboard -t image/png")}, // gets screenshots of full window and stores in clipboard

@@ -61,3 +61,6 @@ patch -p1 patches/dwm-<patch_file_name>.diff
 rm config.h && sudo make clean install
 ```
 Restart dwm to see the changes
+
+# For more information about dwm visit
+https://wiki.archlinux.org/title/dwm
