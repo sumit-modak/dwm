@@ -24,16 +24,6 @@ static const char *colors[][3]      = {
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
-static const Rule rules[] = {
-	/* xprop(1):
-	 *	WM_CLASS(STRING) = instance, class
-	 *	WM_NAME(STRING) = title
-	 */
-	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
-};
-
 /* layout(s) */
 static const float mfact     = 0.50; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
@@ -62,8 +52,6 @@ static const Layout layouts[] = {
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
 /* commands */
-static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", nor_bg_col, "-nf", nor_fg_col, "-sb", sel_bg_col, "-sf", sel_fg_col, NULL };
 static const char *termcmd[]  = { "kitty", NULL };
 static const char *up_vol[]   = { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "+5%",   NULL };
 static const char *down_vol[] = { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "-5%",   NULL };
@@ -114,7 +102,6 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_colon, 				tagmon,         {.i = +1 } },
 	
 	// extra added keyboard shortcuts
-	{ MODKEY,                       XK_o,      				spawn,          {.v = dmenucmd } },			// spawns dmenu
 	{ MODKEY,                       XK_Return, 				spawn,          {.v = termcmd } },			// spawns terminal (kitty)
   { MODKEY, 											XK_u, 						spawn, 					{.v = up_vol } },				// increases volume
   { MODKEY, 											XK_y, 						spawn, 					{.v = down_vol } },			// decreases volume
@@ -124,7 +111,10 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_comma,         spawn,          SHCMD("maim | xclip -selection clipboard -t image/png")}, // gets screenshots of full window and stores in clipboard
   { MODKEY,                       XK_period,        spawn,          SHCMD("maim --select ~/multimedia/screenshots/\"Screenshot_$(date +%Y-%m-%d_%T).png\"")}, // enable user to select screenshot
 	{ MODKEY|ShiftMask,             XK_period,        spawn,          SHCMD("maim --select | xclip -selection clipboard -t image/png")}, // enables user to select screenshot and stores in clipboard
-	{ MODKEY,						 						XK_l,             spawn, 					SHCMD("slock -m \"Locked at  $(date \"+%a %d, %H:%M:%S\")\"")}
+	{ MODKEY,						 						XK_l,             spawn, 					SHCMD("slock -m \"Locked at  $(date \"+%a %d, %H:%M:%S\")\"")},
+	{ MODKEY,												XK_w,							spawn,					SHCMD("brave-browser")},
+	{ MODKEY, 											XK_s,							spawn,					SHCMD("pavucontrol")},
+	{ MODKEY,												XK_o,							spawn,					SHCMD("dmenu_run")}
 };
 
 /* button definitions */
@@ -143,3 +133,14 @@ static const Button buttons[] = {
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
 };
+
+static const Rule rules[] = {0
+	/* xprop(1):
+	 *	WM_CLASS(STRING) = instance, class
+	 *	WM_NAME(STRING) = title
+	 */
+	/* class      instance    title       tags mask     isfloating   monitor */
+//	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
+//	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
+};
+
