@@ -1,7 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-static const unsigned int borderpx  = 2;        /* border pixel of windows */
+static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int gappx     = 4;        /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
@@ -12,7 +12,7 @@ static const char nor_bg_col[]      = "#202020";
 static const char nor_border_col[]  = "#404040";
 static const char nor_fg_col[]      = "#bbbbbb";
 static const char sel_bg_col[]      = "#005577";
-static const char sel_border_col[]  = "#dddddd";
+static const char sel_border_col[]  = "#ffffff";
 static const char sel_fg_col[]      = "#eeeeee";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
@@ -56,6 +56,8 @@ static const char *termcmd[]  = { "kitty", NULL };
 static const char *up_vol[]   = { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "+5%",   NULL };
 static const char *down_vol[] = { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "-5%",   NULL };
 static const char *mute_vol[] = { "pactl", "set-sink-mute",   "@DEFAULT_SINK@", "toggle", NULL };
+static const char *brighter[] = { "brightnessctl", "set", "5%+", NULL };
+static const char *dimmer[]   = { "brightnessctl", "set", "5%-", NULL };
 
 static const Key keys[] = {
 	/* modifier                     key        				function        argument */	
@@ -106,6 +108,8 @@ static const Key keys[] = {
   	{ MODKEY, 						XK_u, 					spawn, 			{.v = up_vol } },			// increases volume
   	{ MODKEY, 						XK_y, 					spawn, 			{.v = down_vol } },			// decreases volume
 	{ MODKEY|ShiftMask,				XK_m,        			spawn,			{.v = mute_vol } },			// toggles mute and last set volume
+    { MODKEY|ShiftMask, 			XK_u,					spawn, 			{.v = brighter } },			// increases brightness
+    { MODKEY|ShiftMask,				XK_y,					spawn, 			{.v = dimmer } },			// decreases brightness
 	{ MODKEY|ShiftMask,             XK_b,             		spawn,          SHCMD("~/.local/bin/setbg")}, // sets or changes background
 	{ MODKEY,                       XK_comma,         		spawn,          SHCMD("maim ~/multimedia/screenshots/\"Screenshot_$(date +%Y-%m-%d_%T).png\"")}, // gets screenhot of full window
 	{ MODKEY|ShiftMask,             XK_comma,         		spawn,          SHCMD("maim | xclip -selection clipboard -t image/png")}, // gets screenshots of full window and stores in clipboard
@@ -113,7 +117,6 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_period,        		spawn,          SHCMD("maim --select | xclip -selection clipboard -t image/png")}, // enables user to select screenshot and stores in clipboard
 	{ MODKEY,						XK_l,             		spawn, 			SHCMD("slock -m \"Locked at  $(date \"+%a %d, %H:%M:%S\")\"")},
 	{ MODKEY,						XK_w,					spawn,			SHCMD("brave-browser")},
-	{ MODKEY, 						XK_s,					spawn,			SHCMD("pavucontrol")},
 	{ MODKEY,						XK_o,					spawn,			SHCMD("dmenu_run")}
 };
 
