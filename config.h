@@ -35,7 +35,7 @@ static const Layout layouts[] = {
 	{ "[]=",      tile },    /* first entry is default */
 	{ "TTT",      htile },   /* master is present on the upper portion of the screen */ /* bottom stack */
 	{ "H*H",      cmaster }, /* master is present on the middle of the screen */ /* centered master */
-	{ "###", 	  grid },		 /* gapless grid layout */
+	{ "###", 	  	grid },		 /* gapless grid layout */
 	{ "[M]",      monocle },
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 };
@@ -62,22 +62,22 @@ static const char *dimmer[]   = { "brightnessctl", "set", "5%-", NULL };
 static const Key keys[] = {
 	/* modifier                     key        				function        argument */	
 	{ MODKEY,                       XK_q,      				killclient,     {0} },					// kill focused window
-	{ MODKEY|ShiftMask,             XK_q,             		quit,           {0} },					// quits dwm
-	{ MODKEY,                       XK_b,      				togglebar,      {0} },					// toggles the dwm bar
+	{ MODKEY|ShiftMask,             XK_q,             quit,           {0} },					// quits dwm
+	{ MODKEY|ShiftMask,             XK_b,      				togglebar,      {0} },					// toggles the dwm bar
 	{ MODKEY,                       XK_d,      				focusstack,     {.i = +1 } },			// shifts focus to next window below stack
 	{ MODKEY,                       XK_h,      				focusstack,     {.i = -1 } },			// shifts focus to next window above stack
 	{ MODKEY|ShiftMask,             XK_d,      				movestack,      {.i = +1 } }, 			// move window downwards the stack
 	{ MODKEY|ShiftMask,             XK_h,      				movestack,      {.i = -1 } },			// move window upwards the stack
-	{ MODKEY,                       XK_bracketleft,   		incnmaster,     {.i = +1 } },			// brings adjacent slave window on master stack
-	{ MODKEY,                       XK_bracketright,		incnmaster,     {.i = -1 } },			// brings adjacent master window on slave stack
-	{ MODKEY,                       XK_k,      				setmfact,       {.f = -0.05} }, 		// resize window - makes master windows smaller
-	{ MODKEY,                       XK_v,      				setmfact,       {.f = +0.05} },			// resize window - makes slave windows smaller
-	{ MODKEY,                  		XK_Tab,    				zoom,           {0} },                  // brings window to the master 
+	{ MODKEY,                       XK_r,      				setmfact,       {.f = -0.05} }, 		// resize window - makes master windows smaller
+	{ MODKEY,                       XK_s,      				setmfact,       {.f = +0.05} },			// resize window - makes slave windows smaller
+	{ MODKEY|ShiftMask,             XK_r,   					incnmaster,     {.i = +1 } },			// brings adjacent slave window on master stack
+	{ MODKEY|ShiftMask,             XK_s,							incnmaster,     {.i = -1 } },			// brings adjacent master window on slave stack
+	{ MODKEY,                  			XK_Tab,    				zoom,           {0} },                  // brings window to the master 
 	{ MODKEY|ShiftMask,             XK_Tab,    				view,           {0} },					// moves to last used tag
 	{ MODKEY,                       XK_t,      				setlayout,      {.v = &layouts[0]} },   // sets vertical tiling layout mode
 	{ MODKEY|ShiftMask,             XK_t,      				setlayout,      {.v = &layouts[1]} },   // sets horizontal tiling layout mode
 	{ MODKEY,                       XK_c,      				setlayout,      {.v = &layouts[2]} },	// sets centered master tiling mode
-	{ MODKEY,						XK_g,					setlayout, 		{.v = &layouts[3]} },	// sets grid layout mode
+	{ MODKEY,												XK_g,							setlayout, 			{.v = &layouts[3]} },	// sets grid layout mode
 	{ MODKEY,                       XK_m,      				setlayout,      {.v = &layouts[4]} },   // sets monocle layout mode
 	{ MODKEY,                       XK_space,  				setlayout,      {.v = &layouts[5]} },   // sets floating layout mode
 	{ MODKEY|ShiftMask,             XK_space,  				togglefloating, {0} },					// toggle between activated layout mode and floating mode for selected window
@@ -90,34 +90,35 @@ static const Key keys[] = {
 	TAGKEYS(                        XK_3,  				                    2)
 	TAGKEYS(                        XK_4,          				            3)
 	TAGKEYS(                        XK_5,           			          	4)
-	TAGKEYS(                        XK_6,                             		5)
-	TAGKEYS(                        XK_7,                             		6)
-	TAGKEYS(                        XK_8,                             		7)
-	TAGKEYS(                        XK_9,                             		8)
+	TAGKEYS(                        XK_6,                             5)
+	TAGKEYS(                        XK_7,                             6)
+	TAGKEYS(                        XK_8,                             7)
+	TAGKEYS(                        XK_9,                             8)
 
 	// unused shortcuts
 	{ MODKEY,                       XK_0,      				view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      				tag,            {.ui = ~0 } },
-	{ MODKEY,                       XK_apostrophe, 			focusmon,       {.i = -1 } },
-	{ MODKEY,                       XK_colon,      			focusmon,       {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_apostrophe,			tagmon,         {.i = -1 } },
+	{ MODKEY,                       XK_apostrophe, 		focusmon,       {.i = -1 } },
+	{ MODKEY,                       XK_colon,      		focusmon,       {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_apostrophe,		tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_colon, 				tagmon,         {.i = +1 } },
 	
 	// extra added keyboard shortcuts
 	{ MODKEY,                       XK_Return, 				spawn,          {.v = termcmd } },			// spawns terminal (kitty)
-  	{ MODKEY, 						XK_u, 					spawn, 			{.v = up_vol } },			// increases volume
-  	{ MODKEY, 						XK_y, 					spawn, 			{.v = down_vol } },			// decreases volume
-	{ MODKEY|ShiftMask,				XK_m,        			spawn,			{.v = mute_vol } },			// toggles mute and last set volume
-    { MODKEY|ShiftMask, 			XK_u,					spawn, 			{.v = brighter } },			// increases brightness
-    { MODKEY|ShiftMask,				XK_y,					spawn, 			{.v = dimmer } },			// decreases brightness
-	{ MODKEY|ShiftMask,             XK_b,             		spawn,          SHCMD("~/.local/bin/setbg")}, // sets or changes background
-	{ MODKEY,                       XK_comma,         		spawn,          SHCMD("maim ~/multimedia/screenshots/\"Screenshot_$(date +%Y-%m-%d_%T).png\"")}, // gets screenhot of full window
-	{ MODKEY|ShiftMask,             XK_comma,         		spawn,          SHCMD("maim | xclip -selection clipboard -t image/png")}, // gets screenshots of full window and stores in clipboard
-  	{ MODKEY,                       XK_period,        		spawn,          SHCMD("maim --select ~/multimedia/screenshots/\"Screenshot_$(date +%Y-%m-%d_%T).png\"")}, // enable user to select screenshot
-	{ MODKEY|ShiftMask,             XK_period,        		spawn,          SHCMD("maim --select | xclip -selection clipboard -t image/png")}, // enables user to select screenshot and stores in clipboard
-	{ MODKEY,						XK_l,             		spawn, 			SHCMD("slock -m \"Locked at  $(date \"+%a %d, %H:%M:%S\")\"")},
-	{ MODKEY,						XK_w,					spawn,			SHCMD("brave-browser")},
-	{ MODKEY,						XK_o,					spawn,			SHCMD("dmenu_run")}
+  { MODKEY, 											XK_u, 						spawn, 					{.v = up_vol } },			// increases volume
+  { MODKEY, 											XK_y, 						spawn, 					{.v = down_vol } },			// decreases volume
+	{ MODKEY|ShiftMask,							XK_m,        			spawn,					{.v = mute_vol } },			// toggles mute and last set volume
+  { MODKEY|ShiftMask, 						XK_u,							spawn, 					{.v = brighter } },			// increases brightness
+  { MODKEY|ShiftMask,							XK_y,							spawn, 					{.v = dimmer } },			// decreases brightness
+	{ MODKEY,				             		XK_w,             spawn,          SHCMD("~/.local/bin/setbg")}, // sets or changes background
+	{ MODKEY,                       XK_comma,         spawn,          SHCMD("maim ~/multimedia/screenshots/\"Screenshot_$(date +%Y-%m-%d_%T).png\"")}, // gets screenhot of full window
+	{ MODKEY|ShiftMask,             XK_comma,         spawn,          SHCMD("maim | xclip -selection clipboard -t image/png")}, // gets screenshots of full window and stores in clipboard
+  { MODKEY,                       XK_period,        spawn,          SHCMD("maim --select ~/multimedia/screenshots/\"Screenshot_$(date +%Y-%m-%d_%T).png\"")}, // enable user to select screenshot
+	{ MODKEY|ShiftMask,             XK_period,        spawn,          SHCMD("maim --select | xclip -selection clipboard -t image/png")}, // enables user to select screenshot and stores in clipboard
+	{ MODKEY,												XK_l,             spawn, 					SHCMD("slock -m \"Locked at  $(date \"+%a %d, %H:%M:%S\")\"")},
+	{ MODKEY, 											XK_v,							spawn, 					SHCMD("virt-manager")},
+	{ MODKEY,												XK_b,							spawn,					SHCMD("brave-browser")},
+	{ MODKEY,												XK_o,							spawn,					SHCMD("dmenu_run")}
 };
 
 /* button definitions */
